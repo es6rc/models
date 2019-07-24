@@ -72,7 +72,7 @@ citing the following paper:
     mkdir -p deps
     git clone https://github.com/assimp/assimp.git deps/assimp-src
     cd deps/assimp-src
-    git checkout 2afeddd5cb63d14bc77b53740b38a54a97d94ee8
+    # git checkout 2afeddd5cb63d14bc77b53740b38a54a97d94ee8
     cmake CMakeLists.txt -G 'Unix Makefiles' && make -j 16
     cd port/PyAssimp && python setup.py install
     cd ../../../..
