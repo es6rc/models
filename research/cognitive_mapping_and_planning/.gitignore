@@ -1,4 +1,7 @@
 deps
+venv
+data/stanford_building_parser_dataset
+data/stanford_building_parser_dataset_raw
 *.pyc
 lib*.so
 lib*.so*
