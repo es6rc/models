@@ -38,7 +38,8 @@ Usage:
 """
 
 import sys, os, numpy as np
-os.environ['PYTHONPATH'] = '../'
+
+os.environ['PYTHONPATH'] = os.path.dirname(__file__)
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 os.environ['PYOPENGL_PLATFORM'] = 'egl'
 os.environ['LD_LIBRARY_PATH'] = "/usr/local/cuda-9.0/lib64:/usr/local/cuda-9.0/lib"
@@ -66,7 +67,6 @@ import src.utils as utils
 import tfcode.cmp as cmp
 from tfcode import tf_utils
 from tfcode import vision_baseline_lstm
-
 
 FLAGS = flags.FLAGS
 
@@ -121,20 +121,21 @@ def _setup_args(config_name, logdir):
 
 def get_args_for_config(config_name):
     configs = config_name.split('.')
-    type = configs[0]
+    runtype = configs[0]
     config_name = '.'.join(configs[1:])
-    if type == 'cmp':
+    if runtype == 'cmp':
         args = config_cmp.get_args_for_config(config_name)
         args.setup_to_run = cmp.setup_to_run
         args.setup_train_step_kwargs = cmp.setup_train_step_kwargs
 
-    elif type == 'bl':
+    elif runtype == 'bl':
         args = config_vision_baseline.get_args_for_config(config_name)
         args.setup_to_run = vision_baseline_lstm.setup_to_run
         args.setup_train_step_kwargs = vision_baseline_lstm.setup_train_step_kwargs
 
     else:
-        logging.fatal('Unknown type: {:s}'.format(type))
+        logging.fatal('Unknown type: {:s}'.format(runtype))
+        args = None
     return args
 
 
@@ -190,14 +191,14 @@ def _test(args):
     checkpoint_dir = os.path.join(format(args.logdir))
     logging.error('Checkpoint_dir: %s', args.logdir)
 
-    config = tf.compat.v1.ConfigProto();
-    config.device_count['GPU'] = 1;
+    config = tf.compat.v1.ConfigProto()
+    config.device_count['GPU'] = 1
 
     m = utils.Foo()
     m.tf_graph = tf.Graph()
 
-    rng_data_seed = 0;
-    rng_action_seed = 0;
+    rng_data_seed = 0
+    rng_action_seed = 0
     R = lambda: nav_env.get_multiplexer_class(args.navtask, rng_data_seed)
     with m.tf_graph.as_default():
         with tf.compat.v1.container(container_name):
@@ -219,13 +220,14 @@ def _test(args):
                 summary_op=None, summary_writer=None, global_step=None, saver=m.saver_op)
 
             last_checkpoint = None
-            reported = False
+            # reported = False
             while True:
                 last_checkpoint_ = None
                 while last_checkpoint_ is None:
                     last_checkpoint_ = slim.evaluation.wait_for_new_checkpoint(
                         checkpoint_dir, last_checkpoint, seconds_to_sleep=10, timeout=60)
-                if last_checkpoint_ is None: break
+                if last_checkpoint_ is None:
+                    break
 
                 last_checkpoint = last_checkpoint_
                 checkpoint_iter = int(os.path.basename(last_checkpoint).split('-')[1])
@@ -234,9 +236,9 @@ def _test(args):
                              time.strftime('%Y-%m-%d-%H:%M:%S', time.localtime()),
                              last_checkpoint)
 
-                if (args.control.only_eval_when_done == False or
+                if (not args.control.only_eval_when_done or
                         checkpoint_iter >= args.solver.max_steps):
-                    start = time.time()
+                    # start = time.time()
                     logging.info('Starting evaluation at %s using checkpoint %s.',
                                  time.strftime('%Y-%m-%d-%H:%M:%S', time.localtime()),
                                  last_checkpoint)

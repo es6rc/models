@@ -36,7 +36,7 @@ def get_dataset(dataset_name):
   return dataset
 
 class Loader():
-  def get_data_dir():
+  def get_data_dir(self):
     pass
 
   def get_meta_data(self, file_name, data_dir=None):
@@ -68,7 +68,9 @@ class Loader():
 
   def load_building_meshes(self, building):
     dir_name = os.path.join(building['data_dir'], 'mesh', building['name'])
-    mesh_file_name = glob.glob1(dir_name, '*.obj')[0]
+    # dir_name = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), dir_name)
+    mesh_file_name = glob.glob1(dir_name, '*.obj')
+    mesh_file_name = mesh_file_name[0]
     mesh_file_name_full = os.path.join(dir_name, mesh_file_name)
     logging.error('Loading building from obj file: %s', mesh_file_name_full)
     shape = renderer.Shape(mesh_file_name_full, load_materials=True, 

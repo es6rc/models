@@ -14,46 +14,46 @@
 # ==============================================================================
 
 # Test CMP models.
-CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
+CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64:/usr/local/cuda-9.0/lib PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
   python scripts/script_nav_agent_release.py --config_name cmp.lmap_Msc.clip5.sbpd_d_r2r+bench_test \
   --logdir output/cmp.lmap_Msc.clip5.sbpd_d_r2r
-
-CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
-  python scripts/script_nav_agent_release.py --config_name cmp.lmap_Msc.clip5.sbpd_rgb_r2r+bench_test \
-  --logdir output/cmp.lmap_Msc.clip5.sbpd_rgb_r2r
-
-CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
-  python scripts/script_nav_agent_release.py --config_name cmp.lmap_Msc.clip5.sbpd_d_ST+bench_test \
-  --logdir output/cmp.lmap_Msc.clip5.sbpd_d_ST
-
-CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
-  python scripts/script_nav_agent_release.py --config_name cmp.lmap_Msc.clip5.sbpd_rgb_ST+bench_test \
-  --logdir output/cmp.lmap_Msc.clip5.sbpd_rgb_ST
-
-CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
-  python scripts/script_nav_agent_release.py --config_name cmp.lmap_Msc.clip5.sbpd_d_r2r_h0_64_80+bench_test \
-  --logdir output/cmp.lmap_Msc.clip5.sbpd_d_r2r_h0_64_80
-
-# Test LSTM baseline models.
-CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
-  python scripts/script_nav_agent_release.py --config_name bl.v2.noclip.sbpd_d_r2r+bench_test \
-  --logdir output/bl.v2.noclip.sbpd_d_r2r
-
-CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
-  python scripts/script_nav_agent_release.py --config_name bl.v2.noclip.sbpd_rgb_r2r+bench_test \
-  --logdir output/bl.v2.noclip.sbpd_rgb_r2r
-
-CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
-  python scripts/script_nav_agent_release.py --config_name bl.v2.noclip.sbpd_d_ST+bench_test \
-  --logdir output/bl.v2.noclip.sbpd_d_ST
-
-CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
-  python scripts/script_nav_agent_release.py --config_name bl.v2.noclip.sbpd_rgb_ST+bench_test \
-  --logdir output/bl.v2.noclip.sbpd_rgb_ST
-
-CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
-  python scripts/script_nav_agent_release.py --config_name bl.v2.noclip.sbpd_d_r2r_h0_64_80+bench_test \
-  --logdir output/bl.v2.noclip.sbpd_d_r2r_h0_64_80
+#
+#CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
+#  python scripts/script_nav_agent_release.py --config_name cmp.lmap_Msc.clip5.sbpd_rgb_r2r+bench_test \
+#  --logdir output/cmp.lmap_Msc.clip5.sbpd_rgb_r2r
+#
+#CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
+#  python scripts/script_nav_agent_release.py --config_name cmp.lmap_Msc.clip5.sbpd_d_ST+bench_test \
+#  --logdir output/cmp.lmap_Msc.clip5.sbpd_d_ST
+#
+#CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
+#  python scripts/script_nav_agent_release.py --config_name cmp.lmap_Msc.clip5.sbpd_rgb_ST+bench_test \
+#  --logdir output/cmp.lmap_Msc.clip5.sbpd_rgb_ST
+#
+#CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
+#  python scripts/script_nav_agent_release.py --config_name cmp.lmap_Msc.clip5.sbpd_d_r2r_h0_64_80+bench_test \
+#  --logdir output/cmp.lmap_Msc.clip5.sbpd_d_r2r_h0_64_80
+#
+## Test LSTM baseline models.
+#CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
+#  python scripts/script_nav_agent_release.py --config_name bl.v2.noclip.sbpd_d_r2r+bench_test \
+#  --logdir output/bl.v2.noclip.sbpd_d_r2r
+#
+#CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
+#  python scripts/script_nav_agent_release.py --config_name bl.v2.noclip.sbpd_rgb_r2r+bench_test \
+#  --logdir output/bl.v2.noclip.sbpd_rgb_r2r
+#
+#CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
+#  python scripts/script_nav_agent_release.py --config_name bl.v2.noclip.sbpd_d_ST+bench_test \
+#  --logdir output/bl.v2.noclip.sbpd_d_ST
+#
+#CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
+#  python scripts/script_nav_agent_release.py --config_name bl.v2.noclip.sbpd_rgb_ST+bench_test \
+#  --logdir output/bl.v2.noclip.sbpd_rgb_ST
+#
+#CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
+#  python scripts/script_nav_agent_release.py --config_name bl.v2.noclip.sbpd_d_r2r_h0_64_80+bench_test \
+#  --logdir output/bl.v2.noclip.sbpd_d_r2r_h0_64_80
 
 # Visualize test trajectories in top view.
 # CUDA_VISIBLE_DEVICES=0 LD_LIBRARY_PATH=/opt/cuda-8.0/lib64:/opt/cudnnv51/lib64 PYTHONPATH='.' PYOPENGL_PLATFORM=egl \
