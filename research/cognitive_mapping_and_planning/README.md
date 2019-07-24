@@ -57,7 +57,7 @@ citing the following paper:
     ```Shell
     mkdir -p deps
     git clone --recursive https://github.com/google/swiftshader.git deps/swiftshader-src
-    cd deps/swiftshader-src && git checkout 91da6b00584afd7dcaed66da88e2b617429b3950
+    cd deps/swiftshader-src  # && git checkout 91da6b00584afd7dcaed66da88e2b617429b3950
     mkdir build && cd build && cmake .. && make -j 16 libEGL libGLESv2
     cd ../../../
     cp deps/swiftshader-src/build/libEGL* libEGL.so.1
@@ -85,8 +85,11 @@ citing the following paper:
     mkdir -p deps
     # If the following git clone command fails, you can also download the source
     # from https://downloads.skewed.de/graph-tool/graph-tool-2.2.44.tar.bz2
-    git clone https://git.skewed.de/count0/graph-tool deps/graph-tool-src
-    cd deps/graph-tool-src && git checkout 178add3a571feb6666f4f119027705d95d2951ab
+    # git clone https://git.skewed.de/count0/graph-tool deps/graph-tool-src
+    # !!! above link not reachable
+    # !!! Download updated repo from github
+    git clone https://github.com/antmd/graph-tool.git deps/graph-tool-src
+    cd deps/graph-tool-src  # && git checkout 178add3a571feb6666f4f119027705d95d2951ab
     bash autogen.sh
     ./configure --disable-cairo --disable-sparsehash --prefix=$HOME/.local
     make -j 16
