@@ -1,6 +1,6 @@
 # Copyright 2016 The TensorFlow Authors All Rights Reserved.
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
+# Licensed under the Apache License, Version 2.0 (the "License")
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
@@ -171,10 +171,10 @@ def image_pre(images, modalities):
     # We always assume images are RGB followed by Depth.
     if 'depth' in modalities:
         d = images[..., -1][..., np.newaxis] * 1.
-        d[d < 0.01] = np.NaN;
-        isnan = np.isnan(d);
-        d = 100. / d;
-        d[isnan] = 0.;
+        d[d < 0.01] = np.NaN
+        isnan = np.isnan(d)
+        d = 100. / d
+        d[isnan] = 0.
         images = np.concatenate((images[..., :-1], d, isnan), axis=images.ndim - 1)
     if 'rgb' in modalities:
         images[..., :3] = images[..., :3] * 1. - 128
@@ -406,8 +406,8 @@ class Building(GridWorld):
         nxy = nxy * self.map.resolution
         nxy = nxy + self.map.origin
         Ts = np.concatenate((nxy, nxy[:, :1]), axis=1)
-        Ts[:, 2] = height;
-        Ts = Ts / 100.;
+        Ts[:, 2] = height
+        Ts = Ts / 100.
 
         # Merge all the shapes into a single shape and add that shape.
         shape.replicate_shape(Ts)
@@ -495,12 +495,12 @@ class MeshMapper(Building):
                                         '{:s}_{:d}_graph.png'.format(self.building_name,
                                                                      seed))
                 node_xyt = self.to_actual_xyt_vec(self.task.nodes)
-                plt.set_cmap('jet');
+                plt.set_cmap('jet')
                 fig, ax = utils.subplot(plt, (1, 1), (12, 12))
                 ax.plot(node_xyt[:, 0], node_xyt[:, 1], 'm.')
-                ax.imshow(self.traversible, origin='lower');
-                ax.set_axis_off();
-                ax.axis('equal');
+                ax.imshow(self.traversible, origin='lower')
+                ax.set_axis_off()
+                ax.axis('equal')
                 ax.set_title('{:s}, {:d}, {:d}'.format(self.building_name,
                                                        self.task.nodes.shape[0],
                                                        self.task.gtG.num_edges()))
@@ -589,8 +589,8 @@ class MeshMapper(Building):
         instances_nodes = [tuple(x) for x in instances_nodes]
 
         imgs_ = self.render_nodes(instances_nodes, perturbs_)
-        imgs = [];
-        next = 0;
+        imgs = []
+        next = 0
         for instance in instances:
             img_i = []
             for _ in instance:
@@ -660,9 +660,9 @@ class MeshMapper(Building):
 
         if self.task_params.output_canonical_map:
             loc_ = loc[0::(self.task_params.num_steps + 1), :]
-            x_axis = np.zeros_like(loc_);
+            x_axis = np.zeros_like(loc_)
             x_axis[:, 1] = 1
-            y_axis = np.zeros_like(loc_);
+            y_axis = np.zeros_like(loc_)
             y_axis[:, 0] = -1
             cum_fs, cum_valid = get_map_to_predict(loc_, x_axis, y_axis,
                                                    map=self.traversible * 1.,
@@ -704,8 +704,8 @@ def _nav_env_reset_helper(type, rng, nodes, batch_size, gtG, max_dist,
         target_class = None
 
     elif type == 'room_to_room_many':
-        goal_node_ids = [];
-        dists = [];
+        goal_node_ids = []
+        dists = []
         node_room_ids = kwargs['node_room_ids']
         # Sample the first one
         start_node_ids_, end_node_ids_, dist_, _, _ = rng_room_to_room(
@@ -725,8 +725,8 @@ def _nav_env_reset_helper(type, rng, nodes, batch_size, gtG, max_dist,
 
     elif type == 'rng_rejection_sampling_many':
         num_goals = num_goals
-        goal_node_ids = [];
-        dists = [];
+        goal_node_ids = []
+        dists = []
 
         n_ori = kwargs['n_ori']
         step_size = kwargs['step_size']
@@ -753,8 +753,8 @@ def _nav_env_reset_helper(type, rng, nodes, batch_size, gtG, max_dist,
     elif type == 'room_to_room_back':
         num_goals = num_goals
         assert (num_goals == 2), 'num_goals must be 2.'
-        goal_node_ids = [];
-        dists = [];
+        goal_node_ids = []
+        dists = []
         node_room_ids = kwargs['node_room_ids']
         # Sample the first one.
         start_node_ids_, end_node_ids_, dist_, _, _ = rng_room_to_room(
@@ -788,9 +788,9 @@ def _nav_env_reset_helper(type, rng, nodes, batch_size, gtG, max_dist,
         assert (num_goals == 1), 'Only supports a single goal.'
         ind = rng.choice(class_nodes.shape[0], size=batch_size)
         target_class = class_nodes[ind, 1]
-        start_node_ids = [];
-        dists = [];
-        goal_node_ids = [];
+        start_node_ids = []
+        dists = []
+        goal_node_ids = []
 
         for t in target_class:
             if sampling == 'uniform':
@@ -799,7 +799,7 @@ def _nav_env_reset_helper(type, rng, nodes, batch_size, gtG, max_dist,
                 cnts[max_dist + 1:] = 0
                 p_each = 1. / cnts / (max_dist + 1.)
                 p_each[cnts == 0] = 0
-                p = p_each[dist_to_class[t]] * 1.;
+                p = p_each[dist_to_class[t]] * 1.
                 p = p / np.sum(p)
                 start_node_id = rng.choice(p.shape[0], size=1, p=p)[0]
             else:
@@ -852,11 +852,11 @@ class NavigationEnv(GridWorld, Building):
     the seed as input."""
         img_path = os.path.join(self.logdir, '{:s}_{:d}_graph.png'.format(self.building_name, seed))
         node_xyt = self.to_actual_xyt_vec(self.task.nodes)
-        plt.set_cmap('jet');
+        plt.set_cmap('jet')
         fig, ax = utils.subplot(plt, (1, 1), (12, 12))
         ax.plot(node_xyt[:, 0], node_xyt[:, 1], 'm.')
-        ax.set_axis_off();
-        ax.axis('equal');
+        ax.set_axis_off()
+        ax.axis('equal')
 
         if self.room_dims is not None:
             for i, r in enumerate(self.room_dims['dims'] * 1):
@@ -867,7 +867,7 @@ class NavigationEnv(GridWorld, Building):
 
                 ax.plot([xmin, xmax, xmax, xmin, xmin],
                         [ymin, ymin, ymax, ymax, ymin], 'g')
-        ax.imshow(self.traversible, origin='lower');
+        ax.imshow(self.traversible, origin='lower')
         with fu.fopen(img_path, 'w') as f:
             fig.savefig(f, bbox_inches='tight', transparent=True, pad_inches=0)
 
@@ -919,8 +919,8 @@ class NavigationEnv(GridWorld, Building):
                 rejection_sampling_M = self.task_params.rejection_sampling_M
                 min_dist = self.task_params.min_dist
                 bins = np.arange(n_bins + 1) / (n_bins * 1.)
-                target_d = np.zeros(n_bins);
-                target_d[...] = 1. / n_bins;
+                target_d = np.zeros(n_bins)
+                target_d[...] = 1. / n_bins
 
                 sampling_d = get_hardness_distribution(
                     self.task.gtG, self.task_params.max_dist, self.task_params.min_dist,
@@ -954,8 +954,8 @@ class NavigationEnv(GridWorld, Building):
                 self.class_map_names = self.task_params.semantic_task.class_map_names
                 nodes_xyt = self.to_actual_xyt_vec(np.array(self.task.nodes))
 
-                tt = utils.Timer();
-                tt.tic();
+                tt = utils.Timer()
+                tt.tic()
                 if self.task_params.type == 'to_nearest_obj_acc':
                     self.task.class_maps_dilated, self.task.node_class_label = label_nodes_with_class_geodesic(
                         nodes_xyt, self.class_maps,
@@ -981,8 +981,8 @@ class NavigationEnv(GridWorld, Building):
                 self._debug_save_map_nodes(seed)
 
     def reset(self, rngs):
-        rng = rngs[0];
-        rng_perturb = rngs[1];
+        rng = rngs[0]
+        rng_perturb = rngs[1]
         nodes = self.task.nodes
         tp = self.task_params
 
@@ -1097,8 +1097,8 @@ class VisualNavigationEnv(NavigationEnv):
         goal_perturbs = self.episode.goal_perturbs
         target_class = self.episode.target_class
 
-        goal_locs = [];
-        rel_goal_locs = [];
+        goal_locs = []
+        rel_goal_locs = []
         for i in range(len(goal_nodes)):
             end_nodes = goal_nodes[i]
             goal_loc, _, _, goal_theta = self.get_loc_axis(
@@ -1484,7 +1484,7 @@ class BuildingMultiplexer():
         return self.buildings[building_id], instances
 
     def sample_env(self, rngs):
-        rng = rngs[0];
+        rng = rngs[0]
         if self.num_buildings == 1:
             building_id = rng.choice(range(len(self.building_names)))
         else:

@@ -79,6 +79,8 @@ def compute_losses_multi_or(logits, actions_one_hot, weights=None,
 
 def get_repr_from_image(images_reshaped, modalities, data_augment, encoder,
                         freeze_conv, wt_decay, is_training):
+    # type: (tf.Tensor, list[str], utils.Foo, str, bool, float, bool) -> (tf.Tensor, list)
+
     # Pass image through lots of convolutional layers, to obtain pool5
     if modalities == ['rgb']:
         with tf.name_scope('pre_rgb'):
@@ -95,6 +97,9 @@ def get_repr_from_image(images_reshaped, modalities, data_augment, encoder,
             d_image = tf.concat([tf.expand_dims(x, -1), tf.expand_dims(y, -1)], 3)
             x = d_image
         scope_name = 'd_' + encoder
+    else:
+        scope_name = None
+        assert modalities
 
     resnet_is_training = is_training and (not freeze_conv)
     # with slim.arg_scope(resnet_v2.resnet_utils.resnet_arg_scope(resnet_is_training)):
