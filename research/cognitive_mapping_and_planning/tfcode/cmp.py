@@ -1,6 +1,6 @@
 # Copyright 2016 The TensorFlow Authors All Rights Reserved.
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
+# Licensed under the Apache License, Version 2.0 (the "License")
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
@@ -150,9 +150,9 @@ def running_combine(fss_logits, confs_probs, incremental_locs,
     # previous_sum_num etc is B x 1 x H x W x C
 
     with tf.name_scope('combine_{:d}'.format(num_steps)):
-        running_sum_nums_ = [];
-        running_sum_denoms_ = [];
-        running_max_denoms_ = [];
+        running_sum_nums_ = []
+        running_sum_denoms_ = []
+        running_max_denoms_ = []
 
         fss_logits_ = tf.unstack(fss_logits, axis=1, num=num_steps)
         confs_probs_ = tf.unstack(confs_probs, axis=1, num=num_steps)
@@ -206,8 +206,8 @@ def get_map_from_images(imgs, mapper_arch, task_params, freeze_conv, wt_decay,
 
     # Add a layer to reduce dimensions for a fc layer.
     if mapper_arch.dim_reduce_neurons > 0:
-        ks = 1;
-        neurons = mapper_arch.dim_reduce_neurons;
+        ks = 1
+        neurons = mapper_arch.dim_reduce_neurons
         init_var = np.sqrt(2.0 / (ks ** 2) / neurons)
         batch_norm_param = mapper_arch.batch_norm_param
         batch_norm_param['is_training'] = batch_norm_is_training_op
@@ -313,7 +313,7 @@ def setup_to_run(m, args, is_training, batch_norm_is_training, summary_mode):
                 m.coverage_ops[i] = tf.pad(m.coverage_ops[i], paddings=paddings_op)
 
     elif task_params.input_type == 'analytical_counts':
-        m.ego_map_ops = [];
+        m.ego_map_ops = []
         m.coverage_ops = []
         for i in range(len(task_params.map_crop_sizes)):
             ego_map_op = m.input_tensors['step']['analytical_counts_{:d}'.format(i)]
@@ -335,18 +335,18 @@ def setup_to_run(m, args, is_training, batch_norm_is_training, summary_mode):
     with tf.name_scope('check_size'):
         is_single_step = tf.equal(tf.unstack(tf.shape(m.ego_map_ops[0]), num=5)[1], 1)
 
-    fr_ops = [];
-    value_ops = [];
-    fr_intermediate_ops = [];
-    value_intermediate_ops = [];
-    crop_value_ops = [];
-    resize_crop_value_ops = [];
-    confs = [];
-    occupancys = [];
+    fr_ops = []
+    value_ops = []
+    fr_intermediate_ops = []
+    value_intermediate_ops = []
+    crop_value_ops = []
+    resize_crop_value_ops = []
+    confs = []
+    occupancys = []
 
     previous_value_op = None
-    updated_state = [];
-    state_names = [];
+    updated_state = []
+    state_names = []
 
     for i in range(len(task_params.map_crop_sizes)):
         map_crop_size = task_params.map_crop_sizes[i]
@@ -469,8 +469,8 @@ def setup_to_run(m, args, is_training, batch_norm_is_training, summary_mode):
     m.train_ops['common'] = [m.input_tensors['common']['orig_maps'],
                              m.input_tensors['common']['goal_loc']]
     m.train_ops['batch_norm_is_training_op'] = batch_norm_is_training_op
-    m.loss_ops = [];
-    m.loss_ops_names = [];
+    m.loss_ops = []
+    m.loss_ops_names = []
 
     if args.arch.readout_maps:
         with tf.name_scope('readout_maps'):
