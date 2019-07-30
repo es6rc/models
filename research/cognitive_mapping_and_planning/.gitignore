@@ -1,4 +1,9 @@
 deps
+venv
+data/stanford_building_parser_dataset
+data/stanford_building_parser_dataset_raw
+output/cmp.lmap_Msc.clip5.sbpd_d_r2r
 *.pyc
 lib*.so
 lib*.so*
+note.md

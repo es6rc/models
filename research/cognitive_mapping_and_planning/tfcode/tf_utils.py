@@ -31,6 +31,7 @@ from tensorflow.python.ops import variable_scope
 sys.path.insert(0, '../slim')
 from preprocessing import inception_preprocessing as ip
 
+# load resnet50 here
 resnet_v2_50 = resnet_v2.resnet_v2_50
 
 
@@ -218,8 +219,8 @@ def get_flow(t, theta, map_size, name_scope='gen_flow'):
 
 
 def distort_image(im, fast_mode=False):
-    # All images in the same batch are transformed the same way, but over
-    # iterations you see different distortions.
+    # All images in the same batch are transformed the same way,
+    # but over iterations you see different distortions.
     # im should be float with values between 0 and 1.
     im_ = tf.reshape(im, shape=(-1, 1, 3))
     im_ = ip.apply_with_random_selector(
@@ -291,10 +292,13 @@ def sample_action(rng, action_probs, optimal_action, sample_gt_prob,
 
     action = np.zeros((batch_size), dtype=np.int32)
     action_sample_wt = np.zeros((batch_size), dtype=np.float32)
+
+    sample_gt_prob_ = None
     if combine_type == 'add':
         sample_gt_prob_ = np.minimum(np.maximum(sample_gt_prob, 0.), 1.)
 
     for i in range(batch_size):
+        distr_ = None
         if combine_type == 'one_or_other':
             sample_gt = rng.rand() < sample_gt_prob
             if sample_gt:
@@ -333,21 +337,21 @@ def train_step_custom_online_sampling(sess, train_op, global_step,
     val_additional_ops = []
 
     # Print all variables here.
-    if False:
-        v = tf.get_collection(tf.GraphKeys.VARIABLES)
-        v_op = [_.value() for _ in v]
-        v_op_value = sess.run(v_op)
-
-        filter = lambda x, y: 'Adam' in x.name
-        # filter = lambda x, y: np.is_any_nan(y)
-        ind = [i for i, (_, __) in enumerate(zip(v, v_op_value)) if filter(_, __)]
-        v = [v[i] for i in ind]
-        v_op_value = [v_op_value[i] for i in ind]
-
-        for i in range(len(v)):
-            logging.info('XXXX: variable: %30s, is_any_nan: %5s, norm: %f.',
-                         v[i].name, np.any(np.isnan(v_op_value[i])),
-                         np.linalg.norm(v_op_value[i]))
+    # if False:
+    #     v = tf.get_collection(tf.GraphKeys.VARIABLES)
+    #     v_op = [_.value() for _ in v]
+    #     v_op_value = sess.run(v_op)
+    #
+    #     filter = lambda x, y: 'Adam' in x.name
+    #     # filter = lambda x, y: np.is_any_nan(y)
+    #     ind = [i for i, (_, __) in enumerate(zip(v, v_op_value)) if filter(_, __)]
+    #     v = [v[i] for i in ind]
+    #     v_op_value = [v_op_value[i] for i in ind]
+    #
+    #     for i in range(len(v)):
+    #         logging.info('XXXX: variable: %30s, is_any_nan: %5s, norm: %f.',
+    #                      v[i].name, np.any(np.isnan(v_op_value[i])),
+    #                      np.linalg.norm(v_op_value[i]))
 
     tt = utils.Timer()
     for i in range(iters):
@@ -514,21 +518,21 @@ def train_step_custom_v2(sess, train_op, global_step, train_step_kwargs,
     val_additional_ops = []
 
     # Print all variables here.
-    if False:
-        v = tf.get_collection(tf.GraphKeys.VARIABLES)
-        v_op = [_.value() for _ in v]
-        v_op_value = sess.run(v_op)
-
-        filter = lambda x, y: 'Adam' in x.name
-        # filter = lambda x, y: np.is_any_nan(y)
-        ind = [i for i, (_, __) in enumerate(zip(v, v_op_value)) if filter(_, __)]
-        v = [v[i] for i in ind]
-        v_op_value = [v_op_value[i] for i in ind]
-
-        for i in range(len(v)):
-            logging.info('XXXX: variable: %30s, is_any_nan: %5s, norm: %f.',
-                         v[i].name, np.any(np.isnan(v_op_value[i])),
-                         np.linalg.norm(v_op_value[i]))
+    # if False:
+    #     v = tf.get_collection(tf.GraphKeys.VARIABLES)
+    #     v_op = [_.value() for _ in v]
+    #     v_op_value = sess.run(v_op)
+    #
+    #     filter = lambda x, y: 'Adam' in x.name
+    #     # filter = lambda x, y: np.is_any_nan(y)
+    #     ind = [i for i, (_, __) in enumerate(zip(v, v_op_value)) if filter(_, __)]
+    #     v = [v[i] for i in ind]
+    #     v_op_value = [v_op_value[i] for i in ind]
+    #
+    #     for i in range(len(v)):
+    #         logging.info('XXXX: variable: %30s, is_any_nan: %5s, norm: %f.',
+    #                      v[i].name, np.any(np.isnan(v_op_value[i])),
+    #                      np.linalg.norm(v_op_value[i]))
 
     tt = utils.Timer()
     for i in range(iters):
@@ -611,12 +615,12 @@ def train_step_custom(sess, train_op, global_step, train_step_kwargs,
 
     val_additional_ops = []
     # Print all variables here.
-    if False:
-        v = tf.get_collection(tf.GraphKeys.VARIABLES)
-        for _ in v:
-            val = sess.run(_.value())
-            logging.info('variable: %30s, is_any_nan: %5s, norm: %f.', _.name,
-                         np.any(np.isnan(val)), np.linalg.norm(val))
+    # if False:
+    #     v = tf.get_collection(tf.GraphKeys.VARIABLES)
+    #     for _ in v:
+    #         val = sess.run(_.value())
+    #         logging.info('variable: %30s, is_any_nan: %5s, norm: %f.', _.name,
+    #                      np.any(np.isnan(val)), np.linalg.norm(val))
 
     for i in range(iters):
         rngs = gen_rng(params, rng)

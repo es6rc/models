@@ -194,6 +194,7 @@ def get_map_from_images(imgs, mapper_arch, task_params, freeze_conv, wt_decay,
                                         task_params.img_width,
                                         task_params.img_channels], name='re_image')
 
+    # Send image to resnet_50
     x, out.vars_to_restore = get_repr_from_image(
         images_reshaped, task_params.modalities, task_params.data_augment,
         mapper_arch.encoder, freeze_conv, wt_decay, is_training)
@@ -335,6 +336,7 @@ def setup_to_run(m, args, is_training, batch_norm_is_training, summary_mode):
     with tf.name_scope('check_size'):
         is_single_step = tf.equal(tf.unstack(tf.shape(m.ego_map_ops[0]), num=5)[1], 1)
 
+    #### Value vars for Planner
     fr_ops = []
     value_ops = []
     fr_intermediate_ops = []
